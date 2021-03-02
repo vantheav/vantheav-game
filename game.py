@@ -9,8 +9,10 @@ robot=tk.PhotoImage(file="C:\\Users\\student\\Desktop\\vantheav-game\\images\\pl
 star=tk.PhotoImage(file="C:\\Users\\student\\Desktop\\vantheav-game\\images\\poin.png")
 well=tk.PhotoImage(file="C:\\Users\\student\\Desktop\\vantheav-game\\images\\well.png")
 boom=tk.PhotoImage(file="C:\\Users\\student\\Desktop\\vantheav-game\\images\\bomb.png")
-
 canvas = tk.Canvas(root)
+
+store_star=0
+did_star=0
 # well--------------------------------------------------------------------------
 game=[
 [2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
@@ -54,45 +56,70 @@ def PosirionPacman(game):
             if game[i][n] ==2:
                 postion=[i,n]
     return postion
+
 def moveRight( event):
+    global store_star
     position=PosirionPacman(game)
     row=position[0]
     column=position[1]
-    if game[row][column+1]!= 0:
+    if  game[row][column+1]==4:
+        gameOver()
+    elif game[row][column+1]!= 0:
         game[row][column]=1
         game[row][column+1]=2
-    canvas.delete("all")
+        store_star+=1
+        canvas.delete("all")
+    
     arrayOfGame()
 
 def moveLeft( event):
+    global store_star
     position=PosirionPacman(game)
     row=position[0]
     column=position[1]
-    if game[row][column-1]!= 0:
+    if  game[row][column-1]==4:
+        gameOver()
+    elif game[row][column-1]!= 0:
         game[row][column]=1
         game[row][column-1]=2
-    canvas.delete("all")
+        store_star+=1
+        canvas.delete("all")
+    
     arrayOfGame()
 def moveUp( event):
+    global store_star
     position=PosirionPacman(game)
     row=position[0]
     column=position[1]
-    if game[row-1][column]!= 0:
+    if  game[row-1][column]==4:
+        gameOver()
+    elif game[row-1][column]!= 0:
         game[row][column]=1
         game[row-1][column]=2
-    canvas.delete("all")
+        store_star+=1
+        canvas.delete("all")
+    
     arrayOfGame()
 def moveDown( event):
+    global store_star
     position=PosirionPacman(game)
     row=position[0]
     column=position[1]
-    if game[row+1][column]!= 0:
+    if  game[row+1][column]==4:
+        gameOver()
         game[row][column]=1
         game[row+1][column]=2
-    canvas.delete("all")
+    elif game[row+1][column]!= 0:
+        game[row][column]=1
+        game[row+1][column]=2
+        store_star+=1
+        canvas.delete("all")
+    
     arrayOfGame()
+def gameOver():
+    canvas.create_text(360,360,text="Game Over")
 
-        
+
 
 root.bind("<Left>", moveLeft) #LEFT CLICK
 root.bind("<Right>", moveRight)  #RIGHT CLICK
